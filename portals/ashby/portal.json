@@ -1,0 +1,88 @@
+{
+  "format": 1,
+  "id": "ASHBY",
+  "name": "Ashby",
+  "version": "1.0.0",
+  "description": "The job boards of companies you choose that hire with Ashby, read straight from each board, with whole postings and pay where they show it.",
+  "tag": "Companies you choose · free, no key",
+  "termsUrl": "https://developers.ashbyhq.com/docs/public-job-posting-api",
+  "countries": null,
+  "kinds": [
+    "any"
+  ],
+  "radius": false,
+  "hosts": [
+    "api.ashbyhq.com"
+  ],
+  "base": "https://api.ashbyhq.com/posting-api/job-board",
+  "fields": [
+    {
+      "name": "boards",
+      "type": "list",
+      "label": "Boards",
+      "help": "A company's board name, as in jobs.ashbyhq.com/ramp, or a link to its board.",
+      "max": 25
+    }
+  ],
+  "maxMegabytes": 20,
+  "kind": "json",
+  "search": {
+    "url": "{base}/{each}",
+    "params": [
+      {
+        "name": "includeCompensation",
+        "value": "true"
+      }
+    ],
+    "each": {
+      "field": "boards",
+      "atOnce": 4
+    },
+    "keepMinutes": 30,
+    "localFilter": true,
+    "items": "jobs",
+    "posting": {
+      "id": "id",
+      "title": {
+        "path": "title",
+        "squash": true
+      },
+      "company": {
+        "template": "{each|title}"
+      },
+      "place": {
+        "join": [
+          "location",
+          {
+            "each": "secondaryLocations",
+            "take": "location",
+            "with": "; ",
+            "limit": 5
+          }
+        ],
+        "with": "; "
+      },
+      "remote": "isRemote",
+      "salary": {
+        "text": "compensation.scrapeableCompensationSalarySummary"
+      },
+      "postedAt": {
+        "path": "publishedAt",
+        "as": "iso"
+      },
+      "url": {
+        "path": "jobUrl",
+        "link": true
+      },
+      "description": "descriptionPlain",
+      "complete": "description"
+    }
+  },
+  "details": {
+    "type": "none"
+  },
+  "test": {
+    "keywords": "engineer",
+    "country": "us"
+  }
+}

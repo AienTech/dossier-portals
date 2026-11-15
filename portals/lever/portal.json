@@ -1,0 +1,112 @@
+{
+  "format": 1,
+  "id": "LEVER",
+  "name": "Lever",
+  "version": "1.0.0",
+  "description": "The job boards of companies you choose that hire with Lever, read straight from each board, with whole postings.",
+  "tag": "Companies you choose · free, no key",
+  "termsUrl": "https://github.com/lever/postings-api",
+  "countries": null,
+  "kinds": [
+    "any"
+  ],
+  "radius": false,
+  "hosts": [
+    "api.lever.co"
+  ],
+  "base": "https://api.lever.co/v0/postings",
+  "fields": [
+    {
+      "name": "boards",
+      "type": "list",
+      "label": "Boards",
+      "help": "A company's board name, as in jobs.lever.co/palantir, or a link to its board.",
+      "max": 25
+    }
+  ],
+  "maxMegabytes": 20,
+  "kind": "json",
+  "search": {
+    "url": "{base}/{each}",
+    "params": [
+      {
+        "name": "mode",
+        "value": "json"
+      }
+    ],
+    "each": {
+      "field": "boards",
+      "atOnce": 4
+    },
+    "keepMinutes": 30,
+    "localFilter": true,
+    "items": "$",
+    "posting": {
+      "id": "id",
+      "title": "text",
+      "company": {
+        "template": "{each|title}"
+      },
+      "place": {
+        "first": [
+          {
+            "each": "categories.allLocations",
+            "with": "; ",
+            "limit": 6
+          },
+          "categories.location"
+        ]
+      },
+      "remote": {
+        "path": "workplaceType",
+        "map": {
+          "remote": true,
+          "hybrid": false,
+          "onsite": false
+        }
+      },
+      "salary": {
+        "min": "salaryRange.min",
+        "max": "salaryRange.max",
+        "currency": "salaryRange.currency",
+        "period": "salaryRange.interval",
+        "periods": {
+          "per-year-salary": "a year",
+          "per-month-salary": "a month",
+          "per-week-salary": "a week",
+          "per-day-wage": "a day",
+          "per-hour-wage": "an hour"
+        }
+      },
+      "postedAt": {
+        "path": "createdAt",
+        "as": "unixMs"
+      },
+      "url": {
+        "path": "hostedUrl",
+        "link": true
+      },
+      "description": {
+        "join": [
+          "descriptionPlain",
+          {
+            "each": "lists",
+            "take": "content",
+            "with": "\n",
+            "clean": "htmlText"
+          },
+          "additionalPlain"
+        ],
+        "with": "\n\n"
+      },
+      "complete": "description"
+    }
+  },
+  "details": {
+    "type": "none"
+  },
+  "test": {
+    "keywords": "engineer",
+    "country": "us"
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "format": 1,
+  "id": "HIMALAYAS",
+  "name": "Himalayas",
+  "version": "1.0.0",
+  "description": "Remote jobs from Himalayas, searched by keyword and by the countries each job can be done from.",
+  "tag": "Remote · free, no key",
+  "termsUrl": "https://himalayas.app/api",
+  "countries": null,
+  "kinds": [
+    "any"
+  ],
+  "remoteOnly": true,
+  "radius": false,
+  "hosts": [
+    "himalayas.app"
+  ],
+  "base": "https://himalayas.app",
+  "credit": {
+    "text": "Jobs from Himalayas",
+    "link": "https://himalayas.app"
+  },
+  "kind": "json",
+  "search": {
+    "url": "{base}/jobs/api/search",
+    "params": [
+      {
+        "name": "q",
+        "value": "{keywords}"
+      },
+      {
+        "name": "country",
+        "value": "{country|upper}"
+      },
+      {
+        "name": "page",
+        "value": "{page}"
+      }
+    ],
+    "paging": {
+      "type": "page",
+      "first": 1,
+      "size": 20,
+      "total": "totalCount"
+    },
+    "itemsMayBeMissing": true,
+    "items": "jobs",
+    "posting": {
+      "id": "guid",
+      "title": "title",
+      "company": "companyName",
+      "place": {
+        "first": [
+          {
+            "each": "locationRestrictions",
+            "with": ", ",
+            "limit": 6
+          },
+          {
+            "value": "Worldwide"
+          }
+        ]
+      },
+      "remote": {
+        "value": true
+      },
+      "salary": {
+        "min": "minSalary",
+        "max": "maxSalary",
+        "currency": "currency",
+        "period": "salaryPeriod",
+        "periods": {
+          "annual": "a year",
+          "yearly": "a year",
+          "monthly": "a month",
+          "hourly": "an hour"
+        }
+      },
+      "postedAt": {
+        "path": "pubDate",
+        "as": "unix"
+      },
+      "url": {
+        "path": "applicationLink",
+        "link": true
+      },
+      "description": {
+        "path": "description",
+        "clean": "htmlText"
+      },
+      "complete": "description"
+    }
+  },
+  "details": {
+    "type": "none"
+  },
+  "test": {
+    "keywords": "developer",
+    "country": "us"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "format": 1,
+  "id": "REMOTEOK",
+  "name": "Remote OK",
+  "version": "1.0.0",
+  "description": "Remote jobs, mostly in tech, from Remote OK's public feed: the newest postings, matched to your search on your server.",
+  "tag": "Remote · free, no key · newest postings only",
+  "termsUrl": "https://remoteok.com/api",
+  "countries": null,
+  "kinds": [
+    "tech"
+  ],
+  "remoteOnly": true,
+  "radius": false,
+  "hosts": [
+    "remoteok.com"
+  ],
+  "base": "https://remoteok.com",
+  "credit": {
+    "text": "Jobs from Remote OK",
+    "link": "https://remoteok.com"
+  },
+  "kind": "json",
+  "search": {
+    "url": "{base}/api",
+    "keepMinutes": 60,
+    "localFilter": true,
+    "items": "$",
+    "posting": {
+      "id": "id",
+      "title": {
+        "path": "position",
+        "clean": "html"
+      },
+      "company": {
+        "path": "company",
+        "clean": "html"
+      },
+      "place": {
+        "path": "location",
+        "clean": "html"
+      },
+      "remote": {
+        "value": true
+      },
+      "salary": {
+        "min": "salary_min",
+        "max": "salary_max",
+        "currency": {
+          "value": "USD"
+        },
+        "defaultPeriod": "a year"
+      },
+      "postedAt": {
+        "path": "date",
+        "as": "iso"
+      },
+      "url": {
+        "path": "url",
+        "link": true
+      },
+      "description": {
+        "path": "description",
+        "clean": "htmlText"
+      },
+      "complete": "description"
+    }
+  },
+  "details": {
+    "type": "none"
+  },
+  "test": {
+    "keywords": "developer",
+    "country": "us"
+  }
+}

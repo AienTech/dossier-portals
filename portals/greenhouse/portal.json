@@ -1,0 +1,83 @@
+{
+  "format": 1,
+  "id": "GREENHOUSE",
+  "name": "Greenhouse",
+  "version": "1.0.0",
+  "description": "The job boards of companies you choose that hire with Greenhouse, read straight from each board, with whole postings.",
+  "tag": "Companies you choose · free, no key",
+  "termsUrl": "https://docs.greenhouse.io/job-board.html",
+  "countries": null,
+  "kinds": [
+    "any"
+  ],
+  "radius": false,
+  "hosts": [
+    "boards-api.greenhouse.io"
+  ],
+  "base": "https://boards-api.greenhouse.io/v1/boards",
+  "fields": [
+    {
+      "name": "boards",
+      "type": "list",
+      "label": "Boards",
+      "help": "A company's board name, as in boards.greenhouse.io/airbnb, or a link to its board.",
+      "max": 25
+    }
+  ],
+  "maxMegabytes": 20,
+  "kind": "json",
+  "search": {
+    "url": "{base}/{each}/jobs",
+    "params": [
+      {
+        "name": "content",
+        "value": "true"
+      }
+    ],
+    "each": {
+      "field": "boards",
+      "atOnce": 4
+    },
+    "keepMinutes": 30,
+    "localFilter": true,
+    "items": "jobs",
+    "posting": {
+      "id": "id",
+      "title": "title",
+      "company": {
+        "first": [
+          "company_name",
+          {
+            "template": "{each|title}"
+          }
+        ]
+      },
+      "place": "location.name",
+      "remote": {
+        "path": "location.name",
+        "contains": "remote",
+        "then": true
+      },
+      "postedAt": {
+        "path": "first_published",
+        "as": "iso"
+      },
+      "url": {
+        "path": "absolute_url",
+        "link": true
+      },
+      "description": {
+        "path": "content",
+        "clean": "htmlText"
+      },
+      "complete": "description"
+    }
+  },
+  "details": {
+    "type": "none"
+  },
+  "test": {
+    "keywords": "engineer",
+    "country": "us"
+  }
+}

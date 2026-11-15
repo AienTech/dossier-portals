@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "A portal's catalog entry",
+  "type": "object",
+  "properties": {
+    "access": {
+      "description": "How the portal is read: its official API, a public feed meant for others to read, or (only for a portal Dossier comes with) without the portal's permission.",
+      "enum": ["official-api", "public-feed", "unofficial"]
+    },
+    "builtIn": {
+      "description": "One of the portals Dossier comes with.",
+      "type": "boolean"
+    }
+  },
+  "required": ["access"],
+  "additionalProperties": false
+}

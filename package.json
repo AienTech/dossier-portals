@@ -1,0 +1,13 @@
+{
+  "name": "dossier-portals",
+  "private": true,
+  "license": "CC0-1.0",
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/check.mjs"
+  },
+  "devDependencies": {
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1"
+  }
+}

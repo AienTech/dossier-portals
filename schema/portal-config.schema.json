@@ -273,6 +273,44 @@
               "default"
             ],
             "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z][A-Za-z0-9]{0,39}$"
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 60
+              },
+              "help": {
+                "type": "string",
+                "maxLength": 300
+              },
+              "type": {
+                "type": "string",
+                "const": "list"
+              },
+              "required": {
+                "default": true,
+                "type": "boolean"
+              },
+              "max": {
+                "default": 25,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 50
+              }
+            },
+            "required": [
+              "name",
+              "label",
+              "type"
+            ],
+            "additionalProperties": false
           }
         ]
       }
@@ -377,6 +415,12 @@
       "type": "number",
       "minimum": 0,
       "maximum": 60
+    },
+    "maxMegabytes": {
+      "default": 5,
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 25
     },
     "maps": {
       "default": {},
@@ -576,6 +620,31 @@
         "localFilter": {
           "default": false,
           "type": "boolean"
+        },
+        "keepMinutes": {
+          "default": 0,
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1440
+        },
+        "each": {
+          "type": "object",
+          "properties": {
+            "field": {
+              "type": "string",
+              "maxLength": 40
+            },
+            "atOnce": {
+              "default": 4,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8
+            }
+          },
+          "required": [
+            "field"
+          ],
+          "additionalProperties": false
         },
         "posting": {
           "type": "object",
@@ -934,6 +1003,7 @@
               "type": "string",
               "enum": [
                 "html",
+                "htmlText",
                 "markdown"
               ]
             },
@@ -1025,6 +1095,11 @@
                 ]
               }
             },
+            "contains": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
             "then": {
               "anyOf": [
                 {
@@ -1047,6 +1122,7 @@
               "enum": [
                 "iso",
                 "unix",
+                "unixMs",
                 "date",
                 "countryName"
               ]

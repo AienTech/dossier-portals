@@ -1,0 +1,68 @@
+{
+  "format": 1,
+  "id": "REMOTIVE",
+  "name": "Remotive",
+  "version": "1.0.0",
+  "description": "Remote jobs from Remotive's public API, a day after they're posted, matched to your search on your server.",
+  "tag": "Remote · free, no key · a day late",
+  "termsUrl": "https://remotive.com/api-documentation",
+  "countries": null,
+  "kinds": [
+    "any"
+  ],
+  "remoteOnly": true,
+  "radius": false,
+  "hosts": [
+    "remotive.com"
+  ],
+  "base": "https://remotive.com",
+  "credit": {
+    "text": "Jobs from Remotive",
+    "link": "https://remotive.com"
+  },
+  "kind": "json",
+  "search": {
+    "url": "{base}/api/remote-jobs",
+    "keepMinutes": 360,
+    "localFilter": true,
+    "items": "jobs",
+    "posting": {
+      "id": "id",
+      "title": {
+        "path": "title",
+        "clean": "html"
+      },
+      "company": {
+        "path": "company_name",
+        "squash": true
+      },
+      "place": "candidate_required_location",
+      "remote": {
+        "value": true
+      },
+      "salary": {
+        "text": "salary"
+      },
+      "postedAt": {
+        "path": "publication_date",
+        "as": "iso"
+      },
+      "url": {
+        "path": "url",
+        "link": true
+      },
+      "description": {
+        "path": "description",
+        "clean": "htmlText"
+      },
+      "complete": "description"
+    }
+  },
+  "details": {
+    "type": "none"
+  },
+  "test": {
+    "keywords": "developer",
+    "country": "us"
+  }
+}

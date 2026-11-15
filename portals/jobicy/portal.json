@@ -1,0 +1,87 @@
+{
+  "format": 1,
+  "id": "JOBICY",
+  "name": "Jobicy",
+  "version": "1.0.0",
+  "description": "Remote jobs from Jobicy's public API: the newest hundred, matched to your search on your server.",
+  "tag": "Remote · free, no key · newest postings only",
+  "termsUrl": "https://jobicy.com/jobs-rss-feed",
+  "countries": null,
+  "kinds": [
+    "any"
+  ],
+  "remoteOnly": true,
+  "radius": false,
+  "hosts": [
+    "jobicy.com"
+  ],
+  "base": "https://jobicy.com",
+  "credit": {
+    "text": "Jobs from Jobicy",
+    "link": "https://jobicy.com"
+  },
+  "kind": "json",
+  "search": {
+    "url": "{base}/api/v2/remote-jobs",
+    "params": [
+      {
+        "name": "count",
+        "value": "100"
+      }
+    ],
+    "keepMinutes": 60,
+    "localFilter": true,
+    "items": "jobs",
+    "posting": {
+      "id": "id",
+      "title": {
+        "path": "jobTitle",
+        "clean": "html"
+      },
+      "company": {
+        "path": "companyName",
+        "clean": "html"
+      },
+      "place": {
+        "path": "jobGeo",
+        "squash": true
+      },
+      "remote": {
+        "value": true
+      },
+      "salary": {
+        "min": "salaryMin",
+        "max": "salaryMax",
+        "currency": "salaryCurrency",
+        "period": "salaryPeriod",
+        "periods": {
+          "yearly": "a year",
+          "monthly": "a month",
+          "weekly": "a week",
+          "daily": "a day",
+          "hourly": "an hour"
+        }
+      },
+      "postedAt": {
+        "path": "pubDate",
+        "as": "iso"
+      },
+      "url": {
+        "path": "url",
+        "link": true
+      },
+      "description": {
+        "path": "jobDescription",
+        "clean": "htmlText"
+      },
+      "complete": "description"
+    }
+  },
+  "details": {
+    "type": "none"
+  },
+  "test": {
+    "keywords": "developer",
+    "country": "us"
+  }
+}

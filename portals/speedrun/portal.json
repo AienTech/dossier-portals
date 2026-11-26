@@ -1,0 +1,157 @@
+{
+  "format": 1,
+  "id": "SPEEDRUN",
+  "name": "Speedrun",
+  "version": "1.0.0",
+  "description": "Open roles across the a16z speedrun and a16z portfolios, or every startup the board lists, from the speedrun talent network's public API, with posted pay and whole postings.",
+  "tag": "Startups · free, no key",
+  "termsUrl": "https://speedrun-talent-network.com/developers",
+  "countries": null,
+  "kinds": [
+    "any"
+  ],
+  "radius": false,
+  "hosts": [
+    "speedrun-talent-network.com"
+  ],
+  "base": "https://speedrun-talent-network.com/api/v1",
+  "fields": [
+    {
+      "name": "scope",
+      "type": "choice",
+      "label": "Companies",
+      "default": "everywhere",
+      "options": [
+        {
+          "value": "everywhere",
+          "label": "Every company listed"
+        },
+        {
+          "value": "portfolio",
+          "label": "a16z portfolio only"
+        }
+      ]
+    }
+  ],
+  "minGapSeconds": 1.5,
+  "maps": {
+    "posted": {
+      "any": "",
+      "day": "24h",
+      "3days": "7d",
+      "week": "7d",
+      "month": "30d"
+    }
+  },
+  "kind": "json",
+  "search": {
+    "url": "{base}/jobs",
+    "params": [
+      {
+        "name": "q",
+        "value": "{keywords}"
+      },
+      {
+        "name": "loc",
+        "value": "{place}",
+        "when": "place"
+      },
+      {
+        "name": "wp",
+        "value": "remote",
+        "when": "remoteOnly"
+      },
+      {
+        "name": "posted",
+        "value": "{postedWithin|map:posted}"
+      },
+      {
+        "name": "scope",
+        "value": "{fields.scope}"
+      },
+      {
+        "name": "stealth",
+        "value": "hide"
+      },
+      {
+        "name": "sort",
+        "value": "new"
+      },
+      {
+        "name": "page",
+        "value": "{page}"
+      },
+      {
+        "name": "source",
+        "value": "dossier"
+      }
+    ],
+    "paging": {
+      "type": "page",
+      "size": 50,
+      "total": "total",
+      "first": 0
+    },
+    "items": "jobs",
+    "posting": {
+      "id": "id",
+      "title": "title",
+      "company": "company",
+      "place": "location",
+      "remote": {
+        "first": [
+          {
+            "path": "remote",
+            "equals": true,
+            "then": true
+          },
+          {
+            "path": "workplace_type",
+            "equals": "remote",
+            "then": true
+          }
+        ]
+      },
+      "salary": {
+        "min": "comp_min",
+        "max": "comp_max",
+        "currency": "comp_currency",
+        "period": "comp_period",
+        "periods": {
+          "year": "year",
+          "annual": "year",
+          "yearly": "year",
+          "month": "month",
+          "hour": "hour"
+        }
+      },
+      "postedAt": {
+        "path": "published_at",
+        "as": "iso"
+      },
+      "url": {
+        "path": "url",
+        "link": true
+      }
+    }
+  },
+  "details": {
+    "type": "request",
+    "url": "{base}/jobs/{id}",
+    "description": {
+      "join": [
+        {
+          "path": "job.description_text"
+        },
+        {
+          "path": "job.labels.min_experience"
+        }
+      ],
+      "with": "\nMin exp: "
+    }
+  },
+  "test": {
+    "keywords": "engineer",
+    "country": "us"
+  }
+}

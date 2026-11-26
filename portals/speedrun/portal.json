@@ -36,7 +36,7 @@
   "minGapSeconds": 1.5,
   "maps": {
     "posted": {
-      "any": "30d",
+      "any": "",
       "day": "24h",
       "3days": "7d",
       "week": "7d",

@@ -70,6 +70,10 @@
         "value": "{fields.scope}"
       },
       {
+        "name": "stealth",
+        "value": "hide"
+      },
+      {
         "name": "sort",
         "value": "new"
       },
@@ -134,7 +138,17 @@
   "details": {
     "type": "request",
     "url": "{base}/jobs/{id}",
-    "description": "job.description_text"
+    "description": {
+      "join": [
+        {
+          "path": "job.description_text"
+        },
+        {
+          "path": "job.labels.min_experience"
+        }
+      ],
+      "with": "\nMin exp: "
+    }
   },
   "test": {
     "keywords": "engineer",
